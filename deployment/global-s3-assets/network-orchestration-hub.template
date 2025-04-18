@@ -2219,7 +2219,7 @@ Resources:
     Condition: DeployWebUiCondition
     Properties:
       WebACLArn: !GetAtt STNOGraphQLApiWebACL.Arn
-      ResourceArn: !GetAtt AppSyncPipelineApi.Arn
+      ResourceArn: !GetAtt .Arn
 
   GraphQLSchema:
     Type: "AWS::AppSync::GraphQLSchema"
@@ -2227,7 +2227,7 @@ Resources:
     Properties:
       ApiId:
         Fn::GetAtt:
-        - AppSyncPipelineApi
+        - 
         - ApiId
       DefinitionS3Location: !Join ["", ["s3://", !FindInMap ["SourceCode", "General", "S3Bucket"], "-", Ref: "AWS::Region", "/", !FindInMap ["SourceCode", "General", "KeyPrefix"],"/graphql/schema.graphql"]]
 
@@ -2243,7 +2243,7 @@ Resources:
       Name: STNO_DynamoDB_Datasource
       ApiId:
         Fn::GetAtt:
-        - "AppSyncPipelineApi"
+        - ""
         - ApiId
       ServiceRoleArn: !GetAtt AppSyncRole.Arn
       DynamoDBConfig:
@@ -2261,7 +2261,7 @@ Resources:
       Name: STNO_Lambda_Datasource
       ApiId:
         Fn::GetAtt:
-        - "AppSyncPipelineApi"
+        - ""
         - ApiId
       ServiceRoleArn: !GetAtt AppSyncRole.Arn
       LambdaConfig:
@@ -2276,7 +2276,7 @@ Resources:
     DependsOn:
     - GraphQLSchema
     Properties:
-      ApiId: !GetAtt AppSyncPipelineApi.ApiId
+      ApiId: !GetAtt .ApiId
       TypeName: "Query"
       FieldName: "getActionItemsFromTransitNetworkOrchestratorTables"
       DataSourceName: !GetAtt DynamoDBSTNOTableDatasource.Name
@@ -2292,7 +2292,7 @@ Resources:
     DependsOn:
     - GraphQLSchema
     Properties:
-      ApiId: !GetAtt AppSyncPipelineApi.ApiId
+      ApiId: !GetAtt .ApiId
       TypeName: "Query"
       FieldName: "getDashboardItemsFromTransitNetworkOrchestratorTables"
       DataSourceName: !GetAtt DynamoDBSTNOTableDatasource.Name
@@ -2307,7 +2307,7 @@ Resources:
     DependsOn:
     - GraphQLSchema
     Properties:
-      ApiId: !GetAtt AppSyncPipelineApi.ApiId
+      ApiId: !GetAtt .ApiId
       TypeName: "Query"
       FieldName: "getVersionHistoryForSubnetFromTransitNetworkOrchestratorTables"
       DataSourceName: !GetAtt DynamoDBSTNOTableDatasource.Name
@@ -2321,7 +2321,7 @@ Resources:
     Type: AWS::AppSync::Resolver
     Condition: DeployWebUiCondition
     Properties:
-      ApiId: !GetAtt AppSyncPipelineApi.ApiId
+      ApiId: !GetAtt .ApiId
       TypeName: "Mutation"
       FieldName: "updateTransitNetworkOrchestratorTable"
       RequestMappingTemplate: |
@@ -2338,7 +2338,7 @@ Resources:
     Type: AWS::AppSync::FunctionConfiguration
     Condition: DeployWebUiCondition
     Properties:
-      ApiId: !GetAtt AppSyncPipelineApi.ApiId
+      ApiId: !GetAtt .ApiId
       Name: "Mutation_updateTransitNetworkOrchestratorTable_Function"
       Description: "Update DDB table: set status to processing"
       DataSourceName: !GetAtt DynamoDBSTNOTableDatasource.Name
@@ -2352,7 +2352,7 @@ Resources:
     Type: AWS::AppSync::FunctionConfiguration
     Condition: DeployWebUiCondition
     Properties:
-      ApiId: !GetAtt AppSyncPipelineApi.ApiId
+      ApiId: !GetAtt .ApiId
       Name: "STNO_Lambda_Function"
       Description: "Function to receive data from appsync to invoke downstream actions"
       DataSourceName: !GetAtt STNOLambdaDatasource.Name
@@ -3071,6 +3071,7 @@ Resources:
 
   CloudFrontResponseHeadersPolicy:
     Type: AWS::CloudFront::ResponseHeadersPolicy
+    Condition: DeployWebUiCondition
     Properties:
       ResponseHeadersPolicyConfig:
         Name: !Sub CSP-for-Network-Orchestrator-${AWS::Region}
