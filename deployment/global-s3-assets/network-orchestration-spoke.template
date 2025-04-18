@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 AWSTemplateFormatVersion: "2010-09-09"
-Description: (SO0058s) - The AWS CloudFormation template (Spoke) for deployment of the network-orchestration-for-aws-transit-gateway Solution. Version 3.3.15
+Description: (SO0058s) - The AWS CloudFormation template (Spoke) for deployment of the network-orchestration-for-aws-transit-gateway Solution. Version v3.3.15
 
 Parameters:
   HubAccount:
@@ -30,10 +30,10 @@ Mappings:
       Name: "Network-Orchestrator-Event-Bus"
   SourceCode:
     General:
-      S3Bucket: "stno-179629268358"
-      KeyPrefix: "network-orchestration-for-aws-transit-gateway/3.3.15"
-      Version: "3.3.15"
-      TemplateBucket: "."
+      S3Bucket: "solutions"
+      KeyPrefix: "network-orchestration-for-aws-transit-gateway/v3.3.15"
+      Version: "v3.3.15"
+      TemplateBucket: "solutions-reference"
   LambdaFunction:
     Logging:
       Level: "info"
