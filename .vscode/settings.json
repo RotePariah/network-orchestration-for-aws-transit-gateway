@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "file:///c%3A/Users/Owner/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i",
+        "https://d1uauaxba7bl26.cloudfront.net/latest/gzip/CloudFormationResourceSpecification.json": "file:///home/ubuntu/network-orchestration-for-aws-transit-gateway/deployment/global-s3-assets/network-orchestration-hub.template"
+    }
+}
